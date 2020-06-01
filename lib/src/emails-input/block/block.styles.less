@@ -1,0 +1,39 @@
+.emails-input__block {
+  .font-mixin();
+
+  position: relative;
+  margin: 0 8px 4px 0;
+  text-align: right;
+  color: #050038;
+
+  *::before {
+    display: block;
+    position: absolute;
+    top: 9px;
+    height: 8px;
+    width: 8px;
+    content: ' ';
+    background-image: url('../../assets/remove.svg');
+    background-repeat: no-repeat;
+    cursor: pointer;
+  }
+
+  &_is-valid {
+    padding: 0 24px 0 8px;
+    background: rgba(102, 153, 255, 0.2);
+    border-radius: 100px;
+
+    *::before {
+      right: 8px;
+    }
+  }
+
+  &_isnot-valid {
+    padding: 0 16px 0 0;
+    border-bottom: 1px dashed #d92929;
+
+    *::before {
+      right: 0;
+    }
+  }
+}

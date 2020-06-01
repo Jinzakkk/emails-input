@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Emails-input field component</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet" />
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        font-family: 'Open Sans', sans-serif;
+      }
+
+      .board {
+        width: 540px;
+        background: #ffffff;
+        box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+        border-radius: 8px;
+      }
+
+      .board:first-child {
+        margin-right: 20px;
+      }
+
+      .board__header {
+        display: flex;
+        flex-flow: column;
+        padding: 32px 50px 24px 50px;
+        background: #f8f8f7;
+        border-radius: 8px 8px 0px 0px;
+      }
+
+      .board__title {
+        padding-bottom: 24px;
+        margin: 0;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 20px;
+        line-height: 27px;
+        color: #050038;
+      }
+
+      .board__emails-input {
+        flex-grow: 1;
+        height: 96px;
+      }
+
+      .board__footer {
+        display: flex;
+        padding: 24px 50px 32px 50px;
+      }
+
+      .board__add-email,
+      .board__get-emails-count,
+      .board__replace-emails,
+      .board__title {
+        font-style: normal;
+        font-weight: normal;
+      }
+
+      .board__add-email,
+      .board__get-emails-count,
+      .board__replace-emails {
+        padding: 8px 16px;
+        margin-right: 16px;
+        cursor: pointer;
+        background: #4262ff;
+        border-radius: 6px;
+        color: #ffffff;
+        font-size: 14px;
+        line-height: 24px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="board">
+      <div class="board__header">
+        <h1 class="board__title">Share <b>Board name</b> with others</h1>
+        <div id="wrapper1" class="board__emails-input"></div>
+      </div>
+      <div class="board__footer">
+        <span class="board__add-email">Add email</span>
+        <span class="board__get-emails-count">
+          Get emails count
+        </span>
+      </div>
+    </div>
+
+    <div class="board">
+      <div class="board__header">
+        <h1 class="board__title">Share <b>Board name</b> with others</h1>
+        <div id="wrapper2" class="board__emails-input"></div>
+      </div>
+      <div class="board__footer">
+        <span class="board__replace-emails">
+          Replace emails
+        </span>
+      </div>
+    </div>
+
+    <script>
+      window.addEventListener('load', function() {
+        var wrapper1 = document.getElementById('wrapper1');
+        var wrapper2 = document.getElementById('wrapper2');
+
+        var addEmailButton = document.querySelector('.board__add-email');
+        var getEmailsCountButton = document.querySelector('.board__get-emails-count');
+        var replaceEmailsButton = document.querySelector('.board__replace-emails');
+
+        var emailsInput1 = new EmailsInput(wrapper1);
+        var emailsInput2 = new EmailsInput(wrapper2, { inputPlaceholder: 'bla bla bla...' });
+
+        addEmailButton.addEventListener('click', function() {
+          var randomEmail = Date.now().toString(30) + '@mail.com';
+          emailsInput1.addEmail(randomEmail);
+        });
+        getEmailsCountButton.addEventListener('click', function() {
+          var info = emailsInput1.getAllEmails();
+          var total = info.length;
+          var valid = info.reduce(function(acc, curr) {
+            if (curr.isValid) acc++;
+            return acc;
+          }, 0);
+
+          alert('total: ' + total + ', valid: ' + valid + ', invalid: ' + (total - valid));
+        });
+        emailsInput1.addObserver(function(state) {
+          console.log('state: ', JSON.stringify(state, null, 2));
+        });
+
+        replaceEmailsButton.addEventListener('click', function() {
+          emailsInput2.replaceEmails(['ivan@mail.ru', 'max@mail.ru']);
+        });
+      });
+    </script>
+  </body>
+</html>

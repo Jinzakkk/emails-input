@@ -1,0 +1,30 @@
+@OpenSans: 'Open Sans';
+
+// The input should not depend on the form fonts
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap');
+
+.font-mixin() {
+  font-family: @OpenSans;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 24px;
+}
+
+.emails-input {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  justify-content: flex-start;
+  align-items: flex-start;
+  height: 100%;
+  overflow: auto;
+  padding: 8px 7px;
+  background: #ffffff;
+  border: 1px solid #c3c2cf;
+  box-sizing: border-box;
+  border-radius: 4px;
+}
+
+@import './block/block.styles.less';
+@import './input/input.styles.less';

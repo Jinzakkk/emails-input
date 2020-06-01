@@ -1,4 +1,4 @@
-import { create, toArray, removeElementFromDOM } from './utils';
+import { create, toArray, removeElementFromDOM, getRandomKey } from './utils';
 import { StateEmail, EventWithTarget, State, UserOptions } from './types';
 import createBlock from './block/block';
 import createInput from './input/input';
@@ -36,10 +36,11 @@ export default class EmailsInput {
     if (!email) return;
 
     const isValid = this.checkIsValidEmail(email);
-    const block = createBlock(email, isValid);
+    const key = getRandomKey();
+    const block = createBlock(email, key, isValid);
     this.emailsInput.insertBefore(block, this.emailsInput.lastChild);
 
-    this.state.emails.push({ value: email, isValid });
+    this.state.emails.push({ value: email, isValid, key });
     this.fireObservers();
   }
 
@@ -134,7 +135,7 @@ export default class EmailsInput {
    * @param e
    */
   private handleInputPaste = (e: EventWithTarget<ClipboardEvent>) => {
-    const value = e.clipboardData.getData('text');
+    const value = (e.clipboardData || (window as any).clipboardData).getData('text');
     value.split(',').forEach(value => this.addEmail(value));
 
     // stop pasting text in the input.
@@ -149,8 +150,8 @@ export default class EmailsInput {
     if (e.target.classList.contains(DELETE_BUTTON_CLASS)) {
       const block: HTMLElement | false = e.target.parentElement.classList.contains(BLOCK_CLASS) && e.target.parentElement;
       if (block) {
-        const value: string = block.dataset.value;
-        this.state.emails = this.state.emails.filter(email => email.value !== value);
+        const key: string = block.dataset.key;
+        this.state.emails = this.state.emails.filter(email => email.key !== key);
         removeElementFromDOM(block);
         this.fireObservers();
       }

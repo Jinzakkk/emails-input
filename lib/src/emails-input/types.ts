@@ -3,6 +3,7 @@ export type Options = { [key: string]: string };
 export type StateEmail = {
   value: string;
   isValid: boolean;
+  key: string;
 };
 
 export type State = {

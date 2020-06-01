@@ -28,3 +28,12 @@ export function toArray<T extends Element>(set: HTMLCollectionOf<T>): T[] {
 export function removeElementFromDOM(node: Element): void {
   node.parentNode.removeChild(node);
 }
+
+/**
+ * Get random key.
+ */
+export function getRandomKey(): string {
+  return Math.random()
+    .toString(36)
+    .substr(2, 9);
+}

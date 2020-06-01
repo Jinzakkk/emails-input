@@ -15,8 +15,8 @@ describe('EmailsInput component', () => {
     emailsInputComponent = null;
   });
 
-  const dispatchClickOnDeleteButton = (email: string) => {
-    (document.querySelector(`[data-value="${email}"] .${DELETE_BUTTON_CLASS}`) as HTMLSpanElement).click();
+  const dispatchClickOnDeleteButton = (key: string) => {
+    (document.querySelector(`[data-key="${key}"] .${DELETE_BUTTON_CLASS}`) as HTMLSpanElement).click();
   };
 
   test('it should render EmailsInput component', () => {
@@ -78,11 +78,12 @@ describe('EmailsInput component', () => {
     expect(callback).toBeCalledTimes(1);
   });
 
-  test('is should delete added email', () => {
-    const emails = ['bla@bla.com', 'baz@baz.com'];
+  test('is should delete one of the equals added emails', () => {
+    const emails = ['bla@bla.com', 'bla@bla.com'];
 
     emailsInputComponent.replaceEmails(emails);
-    dispatchClickOnDeleteButton(emails[1]);
+    const removingEmail = emailsInputComponent.getAllEmails()[1];
+    dispatchClickOnDeleteButton(removingEmail.key);
     const result = emailsInputComponent.getAllEmails();
 
     expect(result.length).toEqual(1);

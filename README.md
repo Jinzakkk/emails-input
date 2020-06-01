@@ -12,7 +12,7 @@ Emails-input field component. [DEMO](https://jinzakkk.github.io/emails-input/dem
 
 Download [lib/dist](https://github.com/Jinzakkk/emails-input/tree/master/lib/dist) and import the files into your project.
 
-### Example
+### Example ([or demo code](https://github.com/Jinzakkk/emails-input/blob/master/demo/index.html))
 
 ```html
 <html>
